@@ -17,7 +17,7 @@
 
         <div>
             <x-input-label for="patronymic" :value="__('Отчество')" />
-            <x-text-input id="patronymic" class="block mt-1 w-full" type="text" name="patronymic" :value="old('patronymic', $user->patronymic)" required autofocus autocomplete="patronymic" />
+            <x-text-input id="patronymic" class="block mt-1 w-full" type="text" name="patronymic" :value="old('patronymic', $user->patronymic)" autofocus autocomplete="patronymic" />
             <x-input-error :messages="$errors->get('patronymic')" class="mt-2" />
         </div>
 
@@ -37,7 +37,11 @@
             <x-input-label for="organization" :value="__('Организация')" />
             <select name="organization" id="organization" class="block mt-1 w-full" required>
                 @foreach($organizations as $organization)
-                    <option value="{{ $organization->name }}" @if($organization->name == $user->organization->name ?? null) selected @endif>{{ $organization->name }}</option>
+                    @if (!empty($user->organization))
+                        <option value="{{ $organization->name }}" @if($organization->name == $user->organization->name) selected @endif>{{ $organization->name }}</option>
+                    @else
+                        <option value="{{ $organization->name }}">{{ $organization->name }}</option>
+                    @endif
                 @endforeach
             </select>
         </div>

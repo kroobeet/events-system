@@ -41,9 +41,9 @@ class RegisterUserController extends Controller
         $request->validate([
             'last_name' => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
-            'patronymic' => ['required', 'string', 'max:255'],
+            'patronymic' => ['nullable', 'string', 'max:255'],
             'birth_year' => 'nullable|date_format:Y',
-            'phone' => ['nullable', 'regex:/^\+?[0-9]{10,15}$/'],
+            'phone' => ['nullable', 'regex:/^\+?[0-9\s\-()]{10,20}$/'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'organization' => ['required', 'exists:organizations,name'],

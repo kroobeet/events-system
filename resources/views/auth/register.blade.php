@@ -16,7 +16,7 @@
 
         <div>
             <x-input-label for="patronymic" :value="__('Отчество')" />
-            <x-text-input id="patronymic" class="block mt-1 w-full" type="text" name="patronymic" :value="old('patronymic')" required autofocus autocomplete="patronymic" />
+            <x-text-input id="patronymic" class="block mt-1 w-full" type="text" name="patronymic" :value="old('patronymic')" autofocus autocomplete="patronymic" />
             <x-input-error :messages="$errors->get('patronymic')" class="mt-2" />
         </div>
 
