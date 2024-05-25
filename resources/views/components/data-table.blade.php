@@ -25,6 +25,8 @@
                             @else
                                 {{ $item->organization->name }}
                             @endif
+                        @elseif($column['field'] === 'comment')
+                            {{ $item->comment($column['event']) }}
                         @else
                             @if (isset($column['route']))
                                 <a href="{{ route($column['route'], $item->id) }}" class="text-blue-600 hover:text-blue-900">
@@ -43,6 +45,8 @@
                                     @if ($action['type'] === 'link')
                                         @if ($action['route'] === 'organizations.representatives.edit')
                                             <a href="{{ route($action['route'], ['organization' => $item->organization->id, 'representative' => $item->id]) }}" class="text-blue-600 hover:text-blue-900">{{ $action['label'] }}</a>
+                                        @elseif($action['route'] === 'events.addComment')
+                                            <a href="{{ route($action['route'], ['id' => $action['event'], 'participant_id' => $item->id]) }}" class="text-blue-600 hover:text-blue-900">{{ $action['label'] }}</a>
                                         @else
                                             <a href="{{ route($action['route'], $item->id) }}" class="text-blue-600 hover:text-blue-900">{{ $action['label'] }}</a>
                                         @endif

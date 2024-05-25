@@ -24,16 +24,18 @@
                         <x-secondary-button type="submit">Прикрепить участника</x-secondary-button>
                     </form>
 
-
                     <h2 class="text-xl font-semibold mt-6 mb-4">Участники</h2>
                     <x-data-table :items="$participants" :columns="[
                         ['label' => 'ФИО', 'field' => 'full_name', 'route' => 'users.edit'],
                         ['label' => 'E-Mail', 'field' => 'email'],
+                        ['label' => 'Комментарий', 'field' => 'comment', 'event' => $event->id],
                         ['label' => 'Дата и время прихода', 'field' => 'participant_came']
                     ]" :actions="[
                         ['type' => 'link', 'route' => 'users.edit', 'label' => 'Редактировать', 'roles' => ['manager']],
-                        ['type' => 'link', 'route' => 'users.show', 'label' => 'Посмотреть', 'roles' => ['manager']]
+                        ['type' => 'link', 'route' => 'users.show', 'label' => 'Посмотреть', 'roles' => ['manager']],
+                        ['type' => 'link', 'route' => 'events.addComment', 'event' => $event->id, 'label' => 'Добавить комментарий', 'roles' => ['manager', 'employee']],
                     ]"/>
+
                     <div class="mt-4">
                         <a href="{{ route('events.index') }}" class="px-4 py-2 bg-gray-500 text-white rounded-md focus:outline-none">Назад к списку мероприятий</a>
                     </div>

@@ -147,5 +147,33 @@ class EventController extends Controller
         return redirect()->route('events.show', $id)->with('success', 'Участник успешно добавлен к мероприятию.');
     }
 
+    public function addComment($id, $participant_id): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+    {
+        $event = Event::findOrFail($id);
+        $participant = User::findOrFail($participant_id);
+        $comment = $participant->comment($event->id);
+        return view('events.add-comment', compact('event', 'participant', 'comment'));
+    }
 
+    public function commentStore(Request $request, $id, $participant_id): RedirectResponse
+    {
+
+        $request->validate([
+            'comment' => 'required|string|max:255',
+        ]);
+
+        $event = Event::findOrFail($id);
+
+        // Проверяем, принадлежит ли указанный пользователь к указанному событию
+        if (!$event->participants()->where('user_id', $participant_id)->exists()) {
+            return redirect()->back()->with('error', 'Указанный пользователь не является участником этого события.');
+        }
+
+        // Находим запись о участнике в событии и обновляем комментарий
+        $participant = User::findOrFail($participant_id);
+        $comment = $request->input('comment');
+        $event->participants()->updateExistingPivot($participant->id, ['comment' => $comment]);
+
+        return redirect()->route('events.show', $id)->with('success', 'Комментарий успешно добавлен.');
+    }
 }

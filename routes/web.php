@@ -56,8 +56,11 @@ Route::middleware('auth')->group(function () {
             Route::get('events/create', [EventController::class, 'create'])->name('events.create');
             Route::post('events/store', [EventController::class, 'store'])->name('events.store');
             Route::delete('events/destroy/{event_id}', [EventController::class, 'destroy'])->name('events.destroy');
-            Route::post('/events/{id}/attach-participant', [EventController::class, 'attachParticipant'])
+            Route::post('events/{id}/attach-participant', [EventController::class, 'attachParticipant'])
                 ->name('events.attachParticipant');
+            Route::get('events/{id}/addComment/{participant_id}', [EventController::class, 'addComment'])->name('events.addComment');
+            Route::post('events/{id}/addComment/{participant_id}', [EventController::class, 'commentStore'])->name('events.addedCommentStore');
+
 
             // Маршруты для пользователи
             Route::get('users', [UserController::class, 'index'])->name('users.index');

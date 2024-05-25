@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -92,5 +93,11 @@ class User extends Authenticatable
         return $this->belongsTo(Organization::class, 'organization_id');
     }
 
-
+    public function comment($event_id)
+    {
+        return DB::table('event_participant')
+            ->where('event_id', $event_id)
+            ->where('user_id', $this->id)
+            ->value('comment');
+    }
 }
