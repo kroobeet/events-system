@@ -56,7 +56,8 @@ Route::middleware('auth')->group(function () {
             Route::get('events/create', [EventController::class, 'create'])->name('events.create');
             Route::post('events/store', [EventController::class, 'store'])->name('events.store');
             Route::delete('events/destroy/{event_id}', [EventController::class, 'destroy'])->name('events.destroy');
-            Route::get('events/{event_id}/{participant_id}', [EventController::class, 'setParticipant'])->name('events.participant.set');
+            Route::post('/events/{id}/attach-participant', [EventController::class, 'attachParticipant'])
+                ->name('events.attachParticipant');
 
             // Маршруты для пользователи
             Route::get('users', [UserController::class, 'index'])->name('users.index');

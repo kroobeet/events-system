@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Organization;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -71,11 +72,22 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+    public function show(string $id): View
     {
         $event = Event::findOrFail($id);
-        $participants = $event->participants()->paginate(10); // Пагинация на 10 участников на страницу
-        return view('events.show', compact('event', 'participants'));
+
+        // Получите роль "participant"
+        $participantRole = Role::where('name', 'participant')->first();
+
+        // Получите всех пользователей с ролью "participant", которые еще не участвуют в этом мероприятии
+        $users = $participantRole->users()->whereDoesntHave('events', function ($query) use ($event) {
+            $query->where('event_id', $event->id);
+        })->get();
+
+        // Пагинация на 10 участников на страницу
+        $participants = $event->participants()->paginate(10);
+
+        return view('events.show', compact('event', 'participants', 'users'));
     }
 
     /**
@@ -119,11 +131,21 @@ class EventController extends Controller
         return redirect()->route('events.index')->with('success', 'Мероприятие успешно удалено');
     }
 
-    public function setParticipant(string $id, $participant_id): RedirectResponse
+    public function attachParticipant(Request $request, string $id)
     {
         $event = Event::findOrFail($id);
-        $participant = User::findOrFail($participant_id);
+        $participant = User::findOrFail($request->get('user_id'));
+
+        // Проверьте, не принадлежит ли участник уже к этому событию
+        if ($event->participants->contains($participant)) {
+            return redirect()->route('events.show', $id)->with('error', 'Участник уже привязан к мероприятию.');
+        }
+
+        // Привяжите участника к мероприятию
         $event->participants()->attach($participant);
-        return redirect()->route('events.show', $id)->with('success', 'Участник'. $participant->full_name .'успешно добавлен');
+
+        return redirect()->route('events.show', $id)->with('success', 'Участник успешно добавлен к мероприятию.');
     }
+
+
 }
