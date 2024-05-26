@@ -13,9 +13,10 @@
                     <p class="mb-4"><strong>Отдел заказавший мероприятие</strong> {{ $event->departament ?? 'Отдел отсутствует' }}</p>
 
                     @if (Auth::user()->hasAnyRole(['manager', 'employee']))
-                    <div class="mt-4">
-                        <a href="{{ route('events.scan.qr', $event->id) }}" class="px-4 py-2 bg-gray-500 text-white rounded-md focus:outline-none">Сканировать QR-код</a>
-                    </div>
+                        <div class="mt-4">
+                            <a href="{{ route('events.scan.qr', $event->id) }}" class="px-4 py-2 bg-gray-500 text-white rounded-md focus:outline-none">Сканировать QR-код</a>
+                        </div>
+                    @endif
 
                     @if (Auth::user()->hasRole('manager'))
                     <h2 class="text-xl font-semibold mt-6 mb-4">Добавьте нового участника, если это необходимо:</h2>
