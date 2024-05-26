@@ -176,4 +176,16 @@ class EventController extends Controller
 
         return redirect()->route('events.show', $id)->with('success', 'Комментарий успешно добавлен.');
     }
+
+    public function qrScanner($event_id)
+    {
+        $event = Event::findOrFail($event_id);
+        return view('events.scan-qr', compact('event'));
+    }
+
+    public function qrValidate($event_id, $qr_code)
+    {
+        $event = Event::findOrFail($event_id);
+        $user = User::where('qr_code', $qr_code)->first();
+    }
 }

@@ -44,8 +44,8 @@ Route::middleware('auth')->group(function () {
         Route::post('events/{id}/addComment/{participant_id}', [EventController::class, 'commentStore'])->name('events.addedCommentStore');
 
         // Маршруты для QR-кода (сканирование и валидация)
-        Route::get('scan-qr', [QrController::class, 'showScanner'])->name('scan.qr');
-        Route::get('validate-qr/{event_id}/{qr_code}', [QrController::class, 'validateQr'])->name('validate.qr');
+        Route::get('events/{event_id}/scan-qr', [EventController::class, 'qrScanner'])->name('events.scan.qr');
+        Route::get('events/{event_id}/validate-qr/{qr_code}', [EventController::class, 'qrValidate'])->name('events.validate.qr');
 
         Route::middleware(CheckRole::class . ':manager')->group(function () {
             // Маршруты для регистрации новых пользователей
