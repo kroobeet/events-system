@@ -12,6 +12,7 @@
                     <p class="mb-4"><strong>Организация заказвшая мероприятие: </strong> <a href="{{ route('organizations.show', $event->organization->id) }}">{{ $event->organization->name }}</a></p>
                     <p class="mb-4"><strong>Отдел заказавший мероприятие</strong> {{ $event->departament ?? 'Отдел отсутствует' }}</p>
 
+                    @if (Auth::user()->hasRole('manager'))
                     <h2 class="text-xl font-semibold mt-6 mb-4">Добавьте нового участника, если это необходимо:</h2>
                     <form action="{{ route('events.attachParticipant', ['id' => $event->id]) }}" method="POST">
                         @csrf
@@ -23,6 +24,7 @@
                         </select>
                         <x-secondary-button type="submit">Прикрепить участника</x-secondary-button>
                     </form>
+                    @endif
 
                     <h2 class="text-xl font-semibold mt-6 mb-4">Участники</h2>
                     <x-data-table :items="$participants" :columns="[
