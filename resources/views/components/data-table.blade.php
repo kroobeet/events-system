@@ -36,6 +36,9 @@
                                 {{ $item->{$column['field']} }}
                             @endif
                         @endif
+                        @if($column['field'] === 'participant_came')
+                            {{ $item->participantСame($column['event']) }}
+                        @endif
                     </td>
                 @endforeach
                     @if ($actions)

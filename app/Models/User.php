@@ -100,4 +100,12 @@ class User extends Authenticatable
             ->where('user_id', $this->id)
             ->value('comment');
     }
+
+    public function participantСame($event_id)
+    {
+        return DB::table('event_participant')
+            ->where('event_id', $event_id)
+            ->where('user_id', $this->id)
+            ->value('participant_came');
+    }
 }

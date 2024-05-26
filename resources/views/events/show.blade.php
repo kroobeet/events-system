@@ -4,6 +4,16 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                @if(session()->has('success'))
+                    <div class="px-4 py-3 rounded relative" style="background-color: #1c7430; color: #eaeaea" role="alert">
+                        <span class="block sm:inline">{{ session()->get('success') }}</span>
+                    </div>
+                @endif
+                @if(session()->has('warning'))
+                    <div class="px-4 py-3 rounded relative" style="background-color: #c49121; color: #eaeaea" role="alert">
+                        <span class="block sm:inline">{{ session()->get('warning') }}</span>
+                    </div>
+                @endif
                 <div class="p-6 bg-white border-b border-gray-200">
                     <h1 class="text-2xl font-semibold mb-4">{{ $event->name }}</h1>
                     <p class="mb-4"><strong>Начало:</strong> {{ $event->start_time }}</p>
@@ -37,7 +47,7 @@
                         ['label' => 'ФИО', 'field' => 'full_name', 'route' => 'users.edit'],
                         ['label' => 'E-Mail', 'field' => 'email'],
                         ['label' => 'Комментарий', 'field' => 'comment', 'event' => $event->id],
-                        ['label' => 'Дата и время прихода', 'field' => 'participant_came']
+                        ['label' => 'Дата и время прихода', 'field' => 'participant_came', 'event' => $event->id]
                     ]" :actions="[
                         ['type' => 'link', 'route' => 'users.edit', 'label' => 'Редактировать', 'roles' => ['manager']],
                         ['type' => 'link', 'route' => 'users.show', 'label' => 'Посмотреть', 'roles' => ['manager']],

@@ -2,6 +2,7 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Проверка участников для мероприятия: {{ $event->name }}
+            <x-text-input hidden="" value="{{ $event->id }}" id="event_id" />
         </h2>
     </x-slot>
 
@@ -101,9 +102,18 @@
 
         domReady(function () {
 
-            // If found you qr code
+            // Your known event ID
+            const eventId = document.getElementById('event_id').value;
+            console.log(eventId)
+
+            // Function to handle QR code scan success
             function onScanSuccess(decodeText, decodeResult) {
-                alert("You Qr is : " + decodeText, decodeResult);
+                // Create the URL with the event ID and scanned QR code
+                const baseUrl = window.location.origin;
+                const url = `${baseUrl}/events/${eventId}/validate-qr/${encodeURIComponent(decodeText)}`;
+
+                // Redirect the browser to the created URL
+                window.location.replace(url);
             }
 
             let htmlscanner = new Html5QrcodeScanner(
@@ -112,6 +122,5 @@
             );
             htmlscanner.render(onScanSuccess);
         });
-
     </script>
 </x-app-layout>

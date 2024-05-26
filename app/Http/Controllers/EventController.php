@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
 {
@@ -185,7 +186,42 @@ class EventController extends Controller
 
     public function qrValidate($event_id, $qr_code)
     {
+        // Находим мероприятие по идентификатору
         $event = Event::findOrFail($event_id);
+
+        // Находим пользователя по QR-коду
         $user = User::where('qr_code', $qr_code)->first();
+
+        // Проверяем, найден ли пользователь
+        if (!$user) {
+            return redirect()->route('events.show', $event_id)->with('warning', 'Пользователь с таким QR-кодом не найден');
+        }
+
+        // Проверяем, является ли пользователь участником мероприятия
+        $participant = $event->participants()->where('user_id', $user->id)->first();
+
+        if ($participant) {
+            // Проверяем поле participant_came
+            $eventParticipant = DB::table('event_participant')
+                ->where('event_id', $event_id)
+                ->where('user_id', $user->id)
+                ->first();
+
+            if (is_null($eventParticipant->participant_came)) {
+                // Обновляем поле participant_came текущим временем
+                DB::table('event_participant')
+                    ->where('event_id', $event_id)
+                    ->where('user_id', $user->id)
+                    ->update(['participant_came' => now()]);
+            }
+
+            return redirect()->route('events.show', $event_id)
+                ->with('success', 'Пользователь '.$user->full_name.' является участником данного мероприятия');
+        } else {
+            return redirect()->route('events.show', $event_id)
+                ->with('warning', 'Пользователь '.$user->full_name.' не является участником данного мероприятия');
+        }
     }
+
+
 }
