@@ -12,6 +12,7 @@
                     <p class="mb-4"><strong>Организация заказвшая мероприятие: </strong> <a href="{{ route('organizations.show', $event->organization->id) }}">{{ $event->organization->name }}</a></p>
                     <p class="mb-4"><strong>Отдел заказавший мероприятие</strong> {{ $event->departament ?? 'Отдел отсутствует' }}</p>
 
+                    @if (Auth::user()->hasAnyRole(['manager', 'employee']))
                     <div class="mt-4">
                         <a href="{{ route('events.scan.qr', $event->id) }}" class="px-4 py-2 bg-gray-500 text-white rounded-md focus:outline-none">Сканировать QR-код</a>
                     </div>
