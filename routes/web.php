@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
         // Маршруты мероприятий доступные в том числе сотрудникам
         Route::get('events', [EventController::class, 'index'])->name('events.index');
         Route::get('events/show/{event_id}', [EventController::class, 'show'])->name('events.show');
+        Route::get('events/{id}/addComment/{participant_id}', [EventController::class, 'addComment'])->name('events.addComment');
+        Route::post('events/{id}/addComment/{participant_id}', [EventController::class, 'commentStore'])->name('events.addedCommentStore');
 
         // Маршруты для QR-кода (сканирование и валидация)
         Route::get('scan-qr', [QrController::class, 'showScanner'])->name('scan.qr');
@@ -58,8 +60,6 @@ Route::middleware('auth')->group(function () {
             Route::delete('events/destroy/{event_id}', [EventController::class, 'destroy'])->name('events.destroy');
             Route::post('events/{id}/attach-participant', [EventController::class, 'attachParticipant'])
                 ->name('events.attachParticipant');
-            Route::get('events/{id}/addComment/{participant_id}', [EventController::class, 'addComment'])->name('events.addComment');
-            Route::post('events/{id}/addComment/{participant_id}', [EventController::class, 'commentStore'])->name('events.addedCommentStore');
 
 
             // Маршруты для пользователи
