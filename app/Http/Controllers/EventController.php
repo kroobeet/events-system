@@ -73,7 +73,8 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): View
+
+    public function show(Request $request, string $id): View
     {
         $event = Event::findOrFail($id);
 
@@ -86,10 +87,27 @@ class EventController extends Controller
         })->get();
 
         // Пагинация на 10 участников на страницу
-        $participants = $event->participants()->paginate(10);
+        $query = $event->participants();
+
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $query->where(function($q) use ($searchTerm) {
+                $q->whereRaw("CONCAT_WS(' ', last_name, first_name, patronymic) like ?", ['%' . $searchTerm . '%'])
+                    ->orWhere('last_name', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('first_name', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('patronymic', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('email', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('comment', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        $participants = $query->paginate(10);
 
         return view('events.show', compact('event', 'participants', 'users'));
     }
+
+
+
 
     /**
      * Show the form for editing the specified resource.

@@ -48,6 +48,7 @@
                     @endif
 
                     <h2 class="text-xl font-semibold mt-6 mb-4">Участники</h2>
+                    <x-search-form action="{{ route('events.show', $event->id) }}" />
                     <x-data-table :items="$participants" :columns="[
                         ['label' => 'ФИО', 'field' => 'full_name', 'route' => 'users.edit'],
                         ['label' => 'E-Mail', 'field' => 'email'],
