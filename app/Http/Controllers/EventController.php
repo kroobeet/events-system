@@ -222,6 +222,4 @@ class EventController extends Controller
                 ->with('warning', 'Пользователь '.$user->full_name.' не является участником данного мероприятия');
         }
     }
-
-
 }
