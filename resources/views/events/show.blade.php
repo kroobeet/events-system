@@ -4,14 +4,14 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                @if(session()->has('success'))
+                @if(session()->has('success-qr'))
                     <div class="px-4 py-3 rounded relative" style="background-color: #1c7430; color: #eaeaea" role="alert">
-                        <span class="block sm:inline">{{ session()->get('success') }}</span>
+                        <span class="block sm:inline">{{ session()->get('success-qr') }}</span>
                         <span class="block sm:inline"><a href="{{ route('events.addComment', ['id' => $event->id, session()->get('user')]) }}">Оставить комментарий</a></span>
                     </div>
-                @elseif(session()->has('success-add-comment'))
+                @elseif(session()->has('success'))
                     <div class="px-4 py-3 rounded relative" style="background-color: #1c7430; color: #eaeaea" role="alert">
-                        <span class="block sm:inline">{{ session()->get('success-add-comment') }}</span>
+                        <span class="block sm:inline">{{ session()->get('success') }}</span>
                     </div>
                 @endif
                 @if(session()->has('warning'))

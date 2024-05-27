@@ -193,7 +193,7 @@ class EventController extends Controller
         $comment = $request->input('comment');
         $event->participants()->updateExistingPivot($participant->id, ['comment' => $comment]);
 
-        return redirect()->route('events.show', $id)->with('success-add-comment', 'Комментарий успешно добавлен.');
+        return redirect()->route('events.show', $id)->with('success', 'Комментарий успешно добавлен.');
     }
 
     public function qrScanner($event_id)
@@ -234,7 +234,7 @@ class EventController extends Controller
             }
 
             return redirect()->route('events.show', $event_id)
-                ->with('success', 'Пользователь '.$user->full_name.' является участником данного мероприятия')->with('user', $user->id);
+                ->with('success-qr', 'Пользователь '.$user->full_name.' является участником данного мероприятия')->with('user', $user->id);
         } else {
             return redirect()->route('events.show', $event_id)
                 ->with('warning', 'Пользователь '.$user->full_name.' не является участником данного мероприятия');
