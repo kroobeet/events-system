@@ -16,6 +16,10 @@ class CreateEventsTable extends Migration
             $table->string('name');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
+            $table->unsignedBigInteger('organization_id')->nullable();
+            $table->string('departament')->nullable();
+            $table->string('location')->nullable();
+            $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('set null');
             $table->timestamps();
         });
     }

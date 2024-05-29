@@ -17,6 +17,9 @@ class CreateEventParticipantTable extends Migration
             $table->dateTime('participant_came')->nullable(); // дата и время, когда участник явился на мероприятие
             $table->string('comment')->nullable();
             $table->timestamps();
+
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
