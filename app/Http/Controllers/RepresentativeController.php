@@ -19,7 +19,12 @@ class RepresentativeController extends Controller
 
     public function show(Representative $representative)
     {
-        return view('representative.show', compact('representative'));
+        return view('representatives.show', compact('representative'));
+    }
+
+    public function edit(Organization $organization, Representative $representative)
+    {
+        return view('representatives.edit', compact('organization', 'representative'));
     }
 
     public function store(Request $request, Organization $organization): RedirectResponse
