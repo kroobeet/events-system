@@ -41,7 +41,7 @@ class EventController extends Controller
     public function create(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $organizations = Organization::all();
-        return view('events.edit', compact('organizations'));
+        return view('events.create', compact('organizations'));
     }
 
     /**
