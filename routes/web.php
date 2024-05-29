@@ -74,7 +74,7 @@ Route::middleware('auth')->group(function () {
             Route::post('organizations', [OrganizationController::class, 'store'])->name('organizations.store');
             Route::get('organizations/show/{organization}', [OrganizationController::class, 'show'])->name('organizations.show');
             Route::get('organizations/edit/{organization}', [OrganizationController::class, 'edit'])->name('organizations.edit');
-            Route::put('organizations/update/{organization}', [OrganizationController::class, 'update'])->name('organizations.update');
+            Route::post('organizations/update/{organization}', [OrganizationController::class, 'update'])->name('organizations.update');
             Route::delete('organizations/destroy/{organization}', [OrganizationController::class, 'destroy'])->name('organizations.destroy');
 
 
@@ -82,7 +82,7 @@ Route::middleware('auth')->group(function () {
             Route::get('organizations/{organization}/representatives/create', [RepresentativeController::class, 'create'])->name('organizations.representatives.create');
             Route::post('organizations/{organization}/representatives', [RepresentativeController::class, 'store'])->name('organizations.representatives.store');
             Route::get('organizations/{organization}/representatives/{representative}/edit', [RepresentativeController::class, 'edit'])->name('organizations.representatives.edit');
-            Route::put('organizations/{organization}/representatives/{representative}', [RepresentativeController::class, 'update'])->name('organizations.representatives.update');
+            Route::post('organizations/{organization}/representatives/{representative}', [RepresentativeController::class, 'update'])->name('organizations.representatives.update');
             Route::delete('organizations/{organization}/representatives/{representative}', [RepresentativeController::class, 'destroy'])->name('organizations.representatives.destroy');
         });
     });
