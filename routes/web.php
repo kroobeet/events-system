@@ -3,7 +3,6 @@
 use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\QrController;
 use App\Http\Controllers\TestEmailController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrganizationController;
