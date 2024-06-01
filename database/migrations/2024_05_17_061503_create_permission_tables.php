@@ -86,6 +86,7 @@ return new class extends Migration
                 ->references('id') // role id
                 ->on($tableNames['roles'])
                 ->onDelete('cascade');
+            $table->foreign('model_id')->references('id')->on('users')->restrictOnDelete();
             if ($teams) {
                 $table->unsignedBigInteger($columnNames['team_foreign_key']);
                 $table->index($columnNames['team_foreign_key'], 'model_has_roles_team_foreign_key_index');
