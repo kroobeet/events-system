@@ -155,12 +155,12 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
         $participant = User::findOrFail($request->get('user_id'));
 
-        // Проверьте, не принадлежит ли участник уже к этому событию
+        // Проверка, не принадлежит ли участник уже к этому событию
         if ($event->participants->contains($participant)) {
             return redirect()->route('events.show', $id)->with('error', 'Участник уже привязан к мероприятию.');
         }
 
-        // Привяжите участника к мероприятию
+        // Привязка участника к мероприятию
         $event->participants()->attach($participant);
 
         return redirect()->route('events.show', $id)->with('success', 'Участник успешно добавлен к мероприятию.');
@@ -188,7 +188,7 @@ class EventController extends Controller
             return redirect()->back()->with('error', 'Указанный пользователь не является участником этого события.');
         }
 
-        // Находим запись о участнике в событии и обновляем комментарий
+        // Находим запись об участнике в мероприятии и обновляем комментарий
         $participant = User::findOrFail($participant_id);
         $comment = $request->input('comment');
         $event->participants()->updateExistingPivot($participant->id, ['comment' => $comment]);

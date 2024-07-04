@@ -20,7 +20,7 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     $user = Auth::user();
 
-    // Генерация QR-кода
+    // Генерация изображения QR-кода
     $qrCode = new QrCode($user->qr_code);
     $writer = new PngWriter();
     $qrCodeImage = $writer->write($qrCode)->getDataUri();

@@ -102,17 +102,16 @@
 
         domReady(function () {
 
-            // Your known event ID
+            // Мы уже знаем ID мероприятия
             const eventId = document.getElementById('event_id').value;
-            console.log(eventId)
 
-            // Function to handle QR code scan success
+            // Функция для обработки успешного сканирования QR-кода (построение маршрута на метод PHP)
             function onScanSuccess(decodeText, decodeResult) {
-                // Create the URL with the event ID and scanned QR code
+                // Создание URL с информацией об EventID и расшифрованным значением QR-кода
                 const baseUrl = window.location.origin;
                 const url = `${baseUrl}/events/${eventId}/validate-qr/${encodeURIComponent(decodeText)}`;
 
-                // Redirect the browser to the created URL
+                // Редирект на построенный маршрут
                 window.location.replace(url);
             }
 
