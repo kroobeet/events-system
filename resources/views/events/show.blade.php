@@ -21,17 +21,16 @@
                 @endif
                 <div class="p-6 bg-white border-b border-gray-200">
                     <h1 class="text-2xl font-semibold mb-4">{{ $event->name }}</h1>
+                    @if (Auth::user()->hasAnyRole(['manager', 'employee']))
+                        <p class="mb-4">
+                            <a href="{{ route('events.scan.qr', $event->id) }}" class="px-4 py-2 bg-gray-500 text-white rounded-md focus:outline-none">Сканировать QR-код</a>
+                        </p>
+                    @endif
                     <p class="mb-4"><strong>Начало:</strong> {{ $event->start_time }}</p>
                     <p class="mb-4"><strong>Конец:</strong> {{ $event->end_time }}</p>
                     <p class="mb-4"><strong>Место проведения: </strong> {{ $event->location }}</p>
                     <p class="mb-4"><strong>Организация заказвшая мероприятие: </strong> <a href="{{ route('organizations.show', $event->organization->id) }}">{{ $event->organization->name }}</a></p>
                     <p class="mb-4"><strong>Отдел заказавший мероприятие</strong> {{ $event->departament ?? 'Отдел отсутствует' }}</p>
-
-                    @if (Auth::user()->hasAnyRole(['manager', 'employee']))
-                        <div class="mt-4">
-                            <a href="{{ route('events.scan.qr', $event->id) }}" class="px-4 py-2 bg-gray-500 text-white rounded-md focus:outline-none">Сканировать QR-код</a>
-                        </div>
-                    @endif
 
                     @if (Auth::user()->hasRole('manager'))
                     <h2 class="text-xl font-semibold mt-6 mb-4">Добавьте нового участника, если это необходимо:</h2>
