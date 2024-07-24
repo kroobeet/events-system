@@ -48,6 +48,27 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- Диплом 1 -->
+        <div class="mt-4">
+            <x-input-label for="diploma_1" :value="__('Диплом 1')" />
+            <x-text-input id="diploma_1" class="block mt-1 w-full" type="text" name="diploma_1" :value="old('diploma_1')" />
+            <x-input-error :messages="$errors->get('diploma_1')" class="mt-2" />
+        </div>
+
+        <!-- Диплом 2 -->
+        <div class="mt-4">
+            <x-input-label for="diploma_2" :value="__('Диплом 2')" />
+            <x-text-input id="diploma_2" class="block mt-1 w-full" type="text" name="diploma_2" :value="old('diploma_2')" />
+            <x-input-error :messages="$errors->get('diploma_2')" class="mt-2" />
+        </div>
+
+        <!-- СНИЛС -->
+        <div class="mt-4">
+            <x-input-label for="snils" :value="__('СНИЛС')" />
+            <x-text-input id="snils" class="block mt-1 w-full" type="text" name="snils" :value="old('snils')" />
+            <x-input-error :messages="$errors->get('snils')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Пароль')" />

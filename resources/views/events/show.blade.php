@@ -7,7 +7,8 @@
                 @if(session()->has('success-qr'))
                     <div class="px-4 py-3 rounded relative" style="background-color: #1c7430; color: #eaeaea" role="alert">
                         <span class="block sm:inline">{{ session()->get('success-qr') }}</span>
-                        <span class="block sm:inline"><a href="{{ route('events.addComment', ['id' => $event->id, session()->get('user')]) }}">Оставить комментарий</a></span>
+                        @if(session()->get(''))
+                            <span class="block sm:inline"><a href="{{ route('events.addComment', ['id' => $event->id, session()->get('user')]) }}">Оставить комментарий</a></span>
                     </div>
                 @elseif(session()->has('success'))
                     <div class="px-4 py-3 rounded relative" style="background-color: #1c7430; color: #eaeaea" role="alert">

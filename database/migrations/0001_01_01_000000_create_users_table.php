@@ -18,6 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('patronymic')->nullable();
             $table->year('birth_year')->nullable();
             $table->string('phone')->nullable();
+            $table->string('diploma_1')->nullable();
+            $table->string('diploma_2')->nullable();
+            $table->string('snils')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

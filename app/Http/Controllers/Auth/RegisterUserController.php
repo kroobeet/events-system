@@ -25,7 +25,7 @@ class RegisterUserController extends Controller
         $organizations = Organization::all();
 
         if ($request->user()->hasRole('manager')) {
-            $roles = Role::whereIn('name', ['manager', 'participant', 'employee'])->get();
+            $roles = Role::whereIn('name', ['manager', 'participant', 'employee'])->orderByRaw('id desc')->get();
         }
 
         return view('auth.register', compact('roles', 'organizations'));

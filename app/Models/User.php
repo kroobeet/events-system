@@ -36,6 +36,9 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
+        'diploma_1',
+        'diploma_2',
+        'snils',
         'birth_year',
         'organization_id'
     ];

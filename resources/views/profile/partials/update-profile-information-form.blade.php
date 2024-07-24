@@ -17,23 +17,26 @@
         @csrf
         @method('patch')
 
-        <div>
-            <x-input-label for="last_name" :value="__('Фамилия')" />
-            <x-text-input id="last_name" name="last_name" type="text" class="mt-1 block w-full" :value="old('last_name', $user->last_name)" required autofocus autocomplete="last_name" />
-            <x-input-error class="mt-2" :messages="$errors->get('last_name')" />
-        </div>
+        @if(Auth::user()->hasAnyRole(['manager', 'employee']))
+            <div>
+                <x-input-label for="last_name" :value="__('Фамилия')" />
+                <x-text-input id="last_name" name="last_name" type="text" class="mt-1 block w-full" :value="old('last_name', $user->last_name)" required autofocus autocomplete="last_name" />
+                <x-input-error class="mt-2" :messages="$errors->get('last_name')" />
+            </div>
 
-        <div>
-            <x-input-label for="first_name" :value="__('Имя')" />
-            <x-text-input id="first_name" name="first_name" type="text" class="mt-1 block w-full" :value="old('first_name', $user->first_name)" required autofocus autocomplete="first_name" />
-            <x-input-error class="mt-2" :messages="$errors->get('first_name')" />
-        </div>
+            <div>
+                <x-input-label for="first_name" :value="__('Имя')" />
+                <x-text-input id="first_name" name="first_name" type="text" class="mt-1 block w-full" :value="old('first_name', $user->first_name)" required autofocus autocomplete="first_name" />
+                <x-input-error class="mt-2" :messages="$errors->get('first_name')" />
+            </div>
 
-        <div>
-            <x-input-label for="patronymic" :value="__('Отчество')" />
-            <x-text-input id="patronymic" name="patronymic" type="text" class="mt-1 block w-full" :value="old('patronymic', $user->patronymic)" required autofocus autocomplete="patronymic" />
-            <x-input-error class="mt-2" :messages="$errors->get('patronymic')" />
-        </div>
+            <div>
+                <x-input-label for="patronymic" :value="__('Отчество')" />
+                <x-text-input id="patronymic" name="patronymic" type="text" class="mt-1 block w-full" :value="old('patronymic', $user->patronymic)" required autofocus autocomplete="patronymic" />
+                <x-input-error class="mt-2" :messages="$errors->get('patronymic')" />
+            </div>
+        @endif
+
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
