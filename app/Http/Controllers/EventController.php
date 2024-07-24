@@ -166,6 +166,22 @@ class EventController extends Controller
         return redirect()->route('events.show', $id)->with('success', 'Участник успешно добавлен к мероприятию.');
     }
 
+    public function dettachParticipant(Request $request, string $id)
+    {
+        $event = Event::findOrFail($id);
+        $participant = User::findOrFail($request->get('user_id'));
+
+        // Проверка принадлежит ли участник к этому событию
+        if ($event->participants->contains($participant)) {
+            return redirect()->route('events.show', $id)->with('error', 'Участник уже привязан к мероприятию.');
+        }
+
+        // Привязка участника к мероприятию
+        $event->participants()->attach($participant);
+
+        return redirect()->route('events.show', $id)->with('success', 'Участник успешно добавлен к мероприятию.');
+    }
+
     public function addComment($id, $participant_id): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $event = Event::findOrFail($id);
