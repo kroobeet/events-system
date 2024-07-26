@@ -54,7 +54,6 @@ class EventController extends Controller
             'start_time' => 'required|date',
             'end_time' => 'required|date|after_or_equal:start_time',
             'organization_id' => 'required|exists:organizations,id',
-            'location' => 'required|string|max:255',
         ]);
 
         Event::create([
@@ -62,7 +61,6 @@ class EventController extends Controller
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
             'organization_id' => $request->organization_id,
-            'location' => $request->location
         ]);
 
         return redirect()->route('events.index')->with('success', 'Мероприятие успешно создано.');
