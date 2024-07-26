@@ -57,8 +57,8 @@ class OrganizationController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'legal_address' => 'required',
-            'email' => 'required|email|unique:organizations,email,'.$organization->id,
+            'phone' => 'nullable',
+            'email' => 'nullable|email|unique:organizations,email,'.$organization->id,
         ]);
 
         $organization->update($request->all());

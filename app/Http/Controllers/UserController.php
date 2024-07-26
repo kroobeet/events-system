@@ -107,6 +107,6 @@ class UserController extends Controller
         // Обновление роли пользователя, если она изменилась
         $user->syncRoles($request->role);
 
-        return redirect()->route('dashboard')->with('success', 'Информация о пользователе обновлена');
+        return redirect()->route('users.show', $user->id)->with('success', 'Информация о пользователе обновлена');
     }
 }
