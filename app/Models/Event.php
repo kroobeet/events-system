@@ -11,7 +11,7 @@ class Event extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'start_time', 'end_time', 'organization_id', 'departament', 'location'];
+    protected $fillable = ['name', 'start_time', 'end_time', 'organization_id'];
 
     public function participants(): BelongsToMany
     {
