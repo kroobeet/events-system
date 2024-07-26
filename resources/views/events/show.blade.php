@@ -6,11 +6,18 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 @if(session()->has('success-qr'))
                     <div class="px-4 py-3 rounded relative" style="background-color: #1c7430; color: #eaeaea" role="alert">
-                        <span class="block sm:inline">{{ session()->get('success-qr') }}</span>
-                        @if(session()->get('comment'))
-                            <span class="block sm:inline">{{ session()->get('comment') }}</span>
-                        @endif
+                        <p><span class="block sm:inline">{{ session()->get('success-qr') }}</span></p>
                     </div>
+                    @if(session()->get('comment'))
+                        <div class="px-4 py-3 rounded relative bg-gray-500" style="color: #eaeaea" role="alert">
+                            <p><span class="block sm:inline">{{ session()->get('comment') }}</span></p>
+                            <p><a href="{{ route('events.addComment', [$event->id, session()->get('user')]) }}" style="color: #eaeaea">Редактировать комментарий</a></p>
+                        </div>
+                    @else
+                        <div class="px-4 py-3 rounded relative bg-gray-500" style="color: #eaeaea" role="alert">
+                            <p><a href="{{ route('events.addComment', [$event->id, session()->get('user')]) }}" style="color: #eaeaea">Добавить комментарий</a></p>
+                        </div>
+                    @endif
                 @elseif(session()->has('success'))
                     <div class="px-4 py-3 rounded relative" style="background-color: #1c7430; color: #eaeaea" role="alert">
                         <span class="block sm:inline">{{ session()->get('success') }}</span>

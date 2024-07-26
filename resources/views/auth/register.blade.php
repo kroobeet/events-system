@@ -66,7 +66,7 @@
         <!-- СНИЛС -->
         <div class="mt-4">
             <x-input-label for="snils" :value="__('СНИЛС')" />
-            <x-text-input id="snils" class="block mt-1 w-full" type="number" name="snils" :value="old('snils')" />
+            <x-text-input id="snils" class="block mt-1 w-full" type="text" name="snils" :value="old('snils')" />
             <x-input-error :messages="$errors->get('snils')" class="mt-2" />
         </div>
 

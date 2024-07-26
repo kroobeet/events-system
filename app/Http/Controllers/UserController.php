@@ -6,6 +6,8 @@ use App\Models\Organization;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
@@ -69,7 +71,7 @@ class UserController extends Controller
             'diploma_1' => ['nullable', 'string', 'max:255'],
             'diploma_2' => ['nullable', 'string', 'max:255'],
             'organization_name' => ['nullable', 'string', 'max:255'],
-            'snils' => ['nullable', 'regex:/^\+?[0-9]{11}$/'],
+            'snils' => ['nullable'],
             'phone' => ['nullable', 'regex:/^\+?[0-9\s\-()]{10,20}$/'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email,' . $user->id],
             'organization' => ['required', 'exists:organizations,name'],
@@ -91,6 +93,16 @@ class UserController extends Controller
             'phone' => $request->phone,
             'organization_id' => $organization->id,
         ]);
+
+        if (!empty($request->password)) {
+            $request->validate([
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            ]);
+
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
+        }
 
         // Обновление роли пользователя, если она изменилась
         $user->syncRoles($request->role);

@@ -60,21 +60,13 @@
 
         <div>
             <x-input-label for="diploma_2" :value="__('Диплом 2')" />
-            <x-text-input id="diploma_2" class="block mt-1 w-full" type="text" name="diploma_1" :value="old('diploma_2', $user->diploma_2)" autofocus autocomplete="diploma_2" />
+            <x-text-input id="diploma_2" class="block mt-1 w-full" type="text" name="diploma_2" :value="old('diploma_2', $user->diploma_2)" autofocus autocomplete="diploma_2" />
             <x-input-error :messages="$errors->get('diploma_2')" class="mt-2" />
         </div>
 
-        <style>
-            input::-webkit-outer-spin-button,
-            input::-webkit-inner-spin-button {
-                /* display: none; <- Crashes Chrome on hover */
-                -webkit-appearance: none;
-                margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-            }
-        </style>
         <div>
             <x-input-label for="snils" :value="__('СНИЛС')" />
-            <x-text-input id="snils" class="block mt-1 w-full input-text qty text" type="number" name="snils" :value="old('snils', $user->snils)" autofocus autocomplete="snils" />
+            <x-text-input id="snils" class="block mt-1 w-full" type="text" name="snils" :value="old('snils', $user->snils)" autofocus autocomplete="snils" />
             <x-input-error :messages="$errors->get('snils')" class="mt-2" />
         </div>
 
