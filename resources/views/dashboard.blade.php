@@ -16,6 +16,8 @@
                 <div class="p-6">
                     <span>Ваш персональный QR-код</span>
                     <img src="{{ $qrCodeImage }}" alt="User QR Code">
+                    <p><span>Вы можете его скачать, используя кнопку:</span></p><br>
+                    <p><a href="{{ $qrCodeImage }}" download class="px-4 py-2 bg-gray-500 text-white rounded-md focus:outline-none">Скачать QR код</a></p>
                 </div>
             </div>
         </div>
