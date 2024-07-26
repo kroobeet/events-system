@@ -27,8 +27,6 @@ class EventFactory extends Factory
             'start_time' => $start_time,
             'end_time' => $end_time,
             'organization_id' => Organization::inRandomOrder()->first()->id,
-            'departament' => null,
-            'location' => $this->faker->address,
         ];
     }
 }
