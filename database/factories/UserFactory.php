@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'phone' => fake()->phoneNumber(),
             'diploma_1' => fake()->word(),
             'diploma_2' => fake()->sentence(3),
-            'snils' => fake()->numberBetween(),
+            'snils' => fake()->numberBetween() + 10000000000,
             'organization_name' => fake()->company(),
             'organization_id' => null,
             'email' => fake()->unique()->safeEmail(),

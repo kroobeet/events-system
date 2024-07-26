@@ -34,7 +34,8 @@
 
         <div>
             <x-input-label for="organization" :value="__('Относится к заказчику')" />
-            <select name="organization" id="organization" class="block mt-1 w-full" required>
+            <select name="organization" id="organization" class="block mt-1 w-full">
+                <option value="">Не относится</option>
                 @foreach($organizations as $organization)
                     <option value="{{ $organization->name }}">{{ $organization->name }}</option>
                 @endforeach

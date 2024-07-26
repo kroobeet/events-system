@@ -50,26 +50,44 @@ class RegisterUserController extends Controller
             'phone' => ['nullable', 'regex:/^\+?[0-9\s\-()]{10,20}$/'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'organization' => ['required', 'exists:organizations,name'],
+            'organization' => ['nullable', 'exists:organizations,name'],
             'role' => ['required', 'exists:roles,name'],
         ]);
 
-        $organization = Organization::where('name', $request->organization)->firstOrFail();
+        if (!empty($request->organization)) {
+            $organization = Organization::where('name', $request->organization)->firstOrFail();
 
-        $user = User::create([
-            'last_name' => $request->last_name,
-            'first_name' => $request->first_name,
-            'patronymic' => $request->patronymic,
-            'email' => $request->email,
-            'diploma_1' => $request->diploma_1,
-            'diploma_2' => $request->diploma_2,
-            'snils' => $request->snils,
-            'organization_name' => $request->organization_name,
-            'password' => Hash::make($request->password),
-            'birth_year' => $request->birth_year,
-            'phone' => $request->phone,
-            'organization_id' => $organization->id,
-        ]);
+            $user = User::create([
+                'last_name' => $request->last_name,
+                'first_name' => $request->first_name,
+                'patronymic' => $request->patronymic,
+                'email' => $request->email,
+                'diploma_1' => $request->diploma_1,
+                'diploma_2' => $request->diploma_2,
+                'snils' => $request->snils,
+                'organization_name' => $request->organization_name,
+                'password' => Hash::make($request->password),
+                'birth_year' => $request->birth_year,
+                'phone' => $request->phone,
+                'organization_id' => $organization->id,
+            ]);
+        } else {
+            $user = User::create([
+                'last_name' => $request->last_name,
+                'first_name' => $request->first_name,
+                'patronymic' => $request->patronymic,
+                'email' => $request->email,
+                'diploma_1' => $request->diploma_1,
+                'diploma_2' => $request->diploma_2,
+                'snils' => $request->snils,
+                'organization_name' => $request->organization_name,
+                'password' => Hash::make($request->password),
+                'birth_year' => $request->birth_year,
+                'phone' => $request->phone,
+            ]);
+        }
+
+
 
         $user->assignRole($request->role);
 
