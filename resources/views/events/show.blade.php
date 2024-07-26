@@ -30,7 +30,6 @@
                     @endif
                     <p class="mb-4"><strong>Начало:</strong> {{ $event->start_time }}</p>
                     <p class="mb-4"><strong>Конец:</strong> {{ $event->end_time }}</p>
-                    <p class="mb-4"><strong>Место проведения: </strong> {{ $event->location }}</p>
                     <p class="mb-4"><strong>Заказчик мероприятия: </strong> <a href="{{ route('organizations.show', $event->organization->id) }}">{{ $event->organization->name }}</a></p>
 
                     @if (Auth::user()->hasRole('manager'))

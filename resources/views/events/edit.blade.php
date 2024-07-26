@@ -33,10 +33,6 @@
                             </select>
                         </div>
                         <div class="mt-4">
-                            <x-input-label for="location" :value="__('Локация')" />
-                            <x-text-input id="location" class="block mt-1 w-full" type="text" name="location" value="{{ $event->location }}" required />
-                        </div>
-                        <div class="mt-4">
                             <x-primary-button>
                                 {{ __('Обновить') }}
                             </x-primary-button>
