@@ -15,7 +15,7 @@
                         ['label' => 'ФИО', 'field' => 'full_name', 'route' => 'users.show'],
                         ['label' => 'Email', 'field' => 'email'],
                         ['label' => 'Телефон', 'field' => 'phone'],
-                        ['label' => 'Год рождения', 'field' => 'birth_year'],
+                        ['label' => 'Организация', 'field' => 'organization_name'],
                     ]" :actions="[
                         ['type' => 'link', 'route' => 'users.edit', 'label' => 'Редактировать', 'roles' => ['manager']],
                         ['type' => 'link', 'route' => 'users.show', 'label' => 'Посмотреть', 'roles' => ['manager']],

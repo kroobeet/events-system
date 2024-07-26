@@ -40,7 +40,8 @@ class User extends Authenticatable
         'diploma_2',
         'snils',
         'birth_year',
-        'organization_id'
+        'organization_id',
+        'organization_name'
     ];
 
     /**
@@ -91,6 +92,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
     }
 
+    // !Заказчик! Связь по вопросом.
     public function organization()
     {
         return $this->belongsTo(Organization::class, 'organization_id');

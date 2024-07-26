@@ -7,8 +7,9 @@
                 @if(session()->has('success-qr'))
                     <div class="px-4 py-3 rounded relative" style="background-color: #1c7430; color: #eaeaea" role="alert">
                         <span class="block sm:inline">{{ session()->get('success-qr') }}</span>
-                        @if(session()->get(''))
-                            <span class="block sm:inline"><a href="{{ route('events.addComment', ['id' => $event->id, session()->get('user')]) }}">Оставить комментарий</a></span>
+                        @if(session()->get('comment'))
+                            <span class="block sm:inline">{{ session()->get('comment') }}</span>
+                        @endif
                     </div>
                 @elseif(session()->has('success'))
                     <div class="px-4 py-3 rounded relative" style="background-color: #1c7430; color: #eaeaea" role="alert">
@@ -30,8 +31,7 @@
                     <p class="mb-4"><strong>Начало:</strong> {{ $event->start_time }}</p>
                     <p class="mb-4"><strong>Конец:</strong> {{ $event->end_time }}</p>
                     <p class="mb-4"><strong>Место проведения: </strong> {{ $event->location }}</p>
-                    <p class="mb-4"><strong>Организация заказвшая мероприятие: </strong> <a href="{{ route('organizations.show', $event->organization->id) }}">{{ $event->organization->name }}</a></p>
-                    <p class="mb-4"><strong>Отдел заказавший мероприятие</strong> {{ $event->departament ?? 'Отдел отсутствует' }}</p>
+                    <p class="mb-4"><strong>Заказчик мероприятия: </strong> <a href="{{ route('organizations.show', $event->organization->id) }}">{{ $event->organization->name }}</a></p>
 
                     @if (Auth::user()->hasRole('manager'))
                     <h2 class="text-xl font-semibold mt-6 mb-4">Добавьте нового участника, если это необходимо:</h2>
@@ -58,6 +58,12 @@
                         ['type' => 'link', 'route' => 'users.edit', 'label' => 'Редактировать', 'roles' => ['manager']],
                         ['type' => 'link', 'route' => 'users.show', 'label' => 'Посмотреть', 'roles' => ['manager']],
                         ['type' => 'link', 'route' => 'events.addComment', 'event' => $event->id, 'label' => 'Добавить комментарий', 'roles' => ['manager', 'employee']],
+                        ['type' => 'link',
+                        'method' => 'POST',
+                        'route' => 'events.detachParticipant',
+                        'event' => $event->id,
+                        'confirm' => 'Вы уверены, что хотите отвязать этого пользователя от мероприятия?',
+                        'label' => 'Открепить участника', 'roles' => ['manager', 'employee']],
                     ]"/>
 
                     <div class="mt-4">

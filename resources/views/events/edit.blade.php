@@ -25,16 +25,12 @@
                             <x-text-input id="end_time" class="block mt-1 w-full" type="datetime-local" name="end_time" value="{{ $event->end_time }}" required />
                         </div>
                         <div class="mt-4">
-                            <x-input-label for="organization_id" :value="__('Организация')" />
+                            <x-input-label for="organization_id" :value="__('Заказчик')" />
                             <select id="organization_id" name="organization_id" class="block mt-1 w-full" required>
                                 @foreach ($organizations as $organization)
                                     <option value="{{ $organization->id }}" {{ $event->organization_id == $organization->id ? 'selected' : '' }}>{{ $organization->name }}</option>
                                 @endforeach
                             </select>
-                        </div>
-                        <div class="mt-4">
-                            <x-input-label for="departament" :value="__('Отдел заказавший мероприятие')" />
-                            <x-text-input id="departament" class="block mt-1 w-full" type="text" name="departament" value="{{ $event->departament }}" />
                         </div>
                         <div class="mt-4">
                             <x-input-label for="location" :value="__('Локация')" />

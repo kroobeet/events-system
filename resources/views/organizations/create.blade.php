@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Создать организацию
+            Добавление нового заказчика
         </h2>
     </x-slot>
 
@@ -16,12 +16,12 @@
                             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
                         </div>
                         <div class="mt-4">
-                            <x-input-label for="legal_address" :value="__('Юридический адрес')" />
-                            <x-text-input id="legal_address" class="block mt-1 w-full" type="text" name="legal_address" :value="old('legal_address')" required />
+                            <x-input-label for="phone" :value="__('Телефон')" />
+                            <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" />
                         </div>
                         <div class="mt-4">
                             <x-input-label for="email" :value="__('Email')" />
-                            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" />
                         </div>
                         <div class="mt-4">
                             <x-primary-button>

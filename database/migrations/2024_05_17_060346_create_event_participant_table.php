@@ -15,7 +15,7 @@ class CreateEventParticipantTable extends Migration
             $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('user_id');
             $table->dateTime('participant_came')->nullable(); // дата и время, когда участник явился на мероприятие
-            $table->string('comment')->nullable();
+            $table->text('comment')->nullable();
             $table->timestamps();
 
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');

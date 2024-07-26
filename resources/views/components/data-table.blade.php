@@ -5,7 +5,7 @@
         <thead class="bg-gray-800 text-white">
         <tr>
             @foreach ($columns as $column)
-                <th class="w-1/{{ count($columns) }} text-left py-3 px-4 uppercase font-semibold text-sm">{{ $column['label'] }}</th>
+                <th class="w-1/{{ count($columns) }} text-left py-3 px-4 uppercase font-semibold text-sm" sortable>{{ $column['label'] }}</th>
             @endforeach
             @if ($actions)
                 <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Действия</th>
@@ -46,10 +46,14 @@
                             @foreach ($actions as $action)
                                 @if (empty($action['roles']) || Auth::user()->hasAnyRole($action['roles']))
                                     @if ($action['type'] === 'link')
-                                        @if ($action['route'] === 'organizations.representatives.edit')
-                                            <a href="{{ route($action['route'], ['organization' => $item->organization->id, 'representative' => $item->id]) }}" class="text-blue-600 hover:text-blue-900">{{ $action['label'] }}</a>
-                                        @elseif($action['route'] === 'events.addComment')
+                                        @if($action['route'] === 'events.addComment')
                                             <a href="{{ route($action['route'], ['id' => $action['event'], 'participant_id' => $item->id]) }}" class="text-blue-600 hover:text-blue-900">{{ $action['label'] }}</a>
+                                        @elseif($action['route'] === 'events.detachParticipant')
+                                            <form action="{{ route($action['route'], ['id' => $action['event'], 'participant_id' => $item->id]) }}" method="POST" class="inline-block">
+                                                @csrf
+                                                @method($action['method'])
+                                                <button type="submit" class="text-red-600 hover:text-red-900 ml-4" onclick="return confirm('{{ $action['confirm'] }}')">{{ $action['label'] }}</button>
+                                            </form>
                                         @else
                                             <a href="{{ route($action['route'], $item->id) }}" class="text-blue-600 hover:text-blue-900">{{ $action['label'] }}</a>
                                         @endif

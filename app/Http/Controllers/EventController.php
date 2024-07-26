@@ -54,7 +54,6 @@ class EventController extends Controller
             'start_time' => 'required|date',
             'end_time' => 'required|date|after_or_equal:start_time',
             'organization_id' => 'required|exists:organizations,id',
-            'departament' => 'nullable',
             'location' => 'required|string|max:255',
         ]);
 
@@ -63,7 +62,6 @@ class EventController extends Controller
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
             'organization_id' => $request->organization_id,
-            'departament' => $request->departament,
             'location' => $request->location
         ]);
 
@@ -97,7 +95,8 @@ class EventController extends Controller
                     ->orWhere('first_name', 'like', '%' . $searchTerm . '%')
                     ->orWhere('patronymic', 'like', '%' . $searchTerm . '%')
                     ->orWhere('email', 'like', '%' . $searchTerm . '%')
-                    ->orWhere('comment', 'like', '%' . $searchTerm . '%');
+                    ->orWhere('comment', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('organization_name', 'like', '%' . $searchTerm . '%');
             });
         }
 
@@ -131,7 +130,6 @@ class EventController extends Controller
             'start_time' => 'required|date',
             'end_time' => 'required|date|after:start_time',
             'organization_id' => 'required|exists:organizations,id',
-            'departament' => 'nullable',
             'location' => 'required|string|max:255',
         ]);
 
@@ -166,20 +164,15 @@ class EventController extends Controller
         return redirect()->route('events.show', $id)->with('success', 'Участник успешно добавлен к мероприятию.');
     }
 
-    public function dettachParticipant(Request $request, string $id)
+    public function detachParticipant($id, $participant_id)
     {
         $event = Event::findOrFail($id);
-        $participant = User::findOrFail($request->get('user_id'));
+        $participant = User::findOrFail($participant_id);
 
-        // Проверка принадлежит ли участник к этому событию
-        if ($event->participants->contains($participant)) {
-            return redirect()->route('events.show', $id)->with('error', 'Участник уже привязан к мероприятию.');
-        }
+        // Отвязка участника от мероприятия
+        $event->participants()->detach($participant);
 
-        // Привязка участника к мероприятию
-        $event->participants()->attach($participant);
-
-        return redirect()->route('events.show', $id)->with('success', 'Участник успешно добавлен к мероприятию.');
+        return redirect()->route('events.show', $event->id)->with('success', 'Участник успешно отвязан от мероприятия.');
     }
 
     public function addComment($id, $participant_id): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
@@ -194,7 +187,7 @@ class EventController extends Controller
     {
 
         $request->validate([
-            'comment' => 'required|string|max:255',
+            'comment' => 'required|string',
         ]);
 
         $event = Event::findOrFail($id);
@@ -249,6 +242,11 @@ class EventController extends Controller
                     ->update(['participant_came' => now()]);
             }
 
+            if (!empty($eventParticipant->comment)) {
+                return redirect()->route('events.show', $event_id)
+                    ->with('success-qr', 'Пользователь '.$user->full_name.' является участником данного мероприятия')->with('user', $user->id)
+                    ->with('comment', $eventParticipant->comment);
+            }
             return redirect()->route('events.show', $event_id)
                 ->with('success-qr', 'Пользователь '.$user->full_name.' является участником данного мероприятия')->with('user', $user->id);
         } else {

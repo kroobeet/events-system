@@ -20,7 +20,7 @@ class UserController extends Controller
             $query->where('last_name', 'like', '%' . $request->input('search') . '%')
                 ->orWhere('first_name', 'like', '%' . $request->input('search') . '%')
                 ->orWhere('patronymic', 'like', '%' . $request->input('search') . '%')
-                ->orWhere('organization', 'like', '%' . $request->input('search') . '%')
+                ->orWhere('organization_name', 'like', '%' . $request->input('search') . '%')
                 ->orWhere('email', 'like', '%' . $request->input('search') . '%');
         }
 
@@ -68,8 +68,9 @@ class UserController extends Controller
             'birth_year' => 'nullable|date_format:Y',
             'diploma_1' => ['nullable', 'string', 'max:255'],
             'diploma_2' => ['nullable', 'string', 'max:255'],
+            'organization_name' => ['nullable', 'string', 'max:255'],
+            'snils' => ['nullable', 'regex:/^\+?[0-9]{11}$/'],
             'phone' => ['nullable', 'regex:/^\+?[0-9\s\-()]{10,20}$/'],
-            'snils' => ['nullable', 'regex:/^\+?[0-9\s\]{11}$/'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email,' . $user->id],
             'organization' => ['required', 'exists:organizations,name'],
             'role' => ['required', 'exists:roles,name'],
@@ -84,6 +85,7 @@ class UserController extends Controller
             'email' => $request->email,
             'diploma_1' => $request->diploma_1,
             'diploma_2' => $request->diploma_2,
+            'organization_name' => $request->organization_name,
             'snils' => $request->snils,
             'birth_year' => $request->birth_year,
             'phone' => $request->phone,

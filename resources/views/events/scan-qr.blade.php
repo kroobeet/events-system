@@ -73,7 +73,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="container">
-                        <h1>Scan QR Codes</h1>
+                        <h1>Сканируйте QR-код</h1>
                         <div class="section">
                             <div id="my-qr-reader">
                             </div>

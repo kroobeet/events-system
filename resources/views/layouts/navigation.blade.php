@@ -24,7 +24,7 @@
                                 Мероприятия
                             </x-nav-link>
                             <x-nav-link :href="route('organizations.index')" :active="request()->routeIs('organizations.index')">
-                                Организации
+                                Заказчики
                             </x-nav-link>
                         @elseif(Auth::user()->hasRole('employee'))
                             <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')">
@@ -96,7 +96,7 @@
                     Мероприятия
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('organizations.index')" :active="request()->routeIs('events.index')">
-                    Организации
+                    Заказчики
                 </x-responsive-nav-link>
                 @elseif(Auth::user()->hasRole('employee'))
                 <x-responsive-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')">

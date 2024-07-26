@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Organization;
-use App\Models\Representative;
 use Illuminate\Http\Request;
 
 class OrganizationController extends Controller
@@ -16,7 +15,7 @@ class OrganizationController extends Controller
         if ($request->has('search')) {
             $searchTerm = $request->input('search');
             $query->where('name', 'like', '%' . $searchTerm . '%')
-                ->orWhere('legal_address', 'like', '%' . $searchTerm . '%')
+                ->orWhere('phone', 'like', '%' . $searchTerm . '%')
                 ->orWhere('email', 'like', '%' . $searchTerm . '%');
         }
 
@@ -27,9 +26,8 @@ class OrganizationController extends Controller
 
     public function show(Organization $organization)
     {
-        $representatives = $organization->representatives()->paginate(10);
         $events = $organization->events()->paginate(10);
-        return view('organizations.show', compact('organization', 'representatives', 'events'));
+        return view('organizations.show', compact('organization', 'events'));
     }
 
     public function create()
@@ -41,8 +39,8 @@ class OrganizationController extends Controller
     {
         $request->validate([
            'name' => 'required',
-           'legal_address' => 'required',
-           'email' => 'required|email|unique:organizations,email',
+           'phone' => 'nullable|unique:organizations,phone',
+           'email' => 'nullable|email|unique:organizations,email',
         ]);
 
         Organization::create($request->all());
@@ -65,13 +63,13 @@ class OrganizationController extends Controller
 
         $organization->update($request->all());
 
-        return redirect()->route('organizations.index')->with('success', 'Организация обновлена');
+        return redirect()->route('organizations.index')->with('success', 'Заказчик обновлен');
     }
 
     public function destroy(Organization $organization)
     {
         $organization->delete();
 
-        return redirect()->route('organizations.index')->with('success', 'Организация удалена');
+        return redirect()->route('organizations.index')->with('success', 'Заказчик удалён');
     }
 }

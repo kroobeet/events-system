@@ -6,7 +6,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestEmailController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrganizationController;
-use App\Http\Controllers\RepresentativeController;
 use App\Http\Middleware\CheckRole;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
@@ -59,6 +58,8 @@ Route::middleware('auth')->group(function () {
             Route::delete('events/destroy/{event_id}', [EventController::class, 'destroy'])->name('events.destroy');
             Route::post('events/{id}/attach-participant', [EventController::class, 'attachParticipant'])
                 ->name('events.attachParticipant');
+            Route::post('events/{id}/detach-participant/{participant_id}/', [EventController::class, 'detachParticipant'])
+                ->name('events.detachParticipant');
 
 
             // Маршруты для пользователи
@@ -76,14 +77,6 @@ Route::middleware('auth')->group(function () {
             Route::get('organizations/edit/{organization}', [OrganizationController::class, 'edit'])->name('organizations.edit');
             Route::post('organizations/update/{organization}', [OrganizationController::class, 'update'])->name('organizations.update');
             Route::delete('organizations/destroy/{organization}', [OrganizationController::class, 'destroy'])->name('organizations.destroy');
-
-
-            // Маршруты для представителей организации
-            Route::get('organizations/{organization}/representatives/create', [RepresentativeController::class, 'create'])->name('organizations.representatives.create');
-            Route::post('organizations/{organization}/representatives', [RepresentativeController::class, 'store'])->name('organizations.representatives.store');
-            Route::get('organizations/{organization}/representatives/{representative}/edit', [RepresentativeController::class, 'edit'])->name('organizations.representatives.edit');
-            Route::post('organizations/{organization}/representatives/{representative}', [RepresentativeController::class, 'update'])->name('organizations.representatives.update');
-            Route::delete('organizations/{organization}/representatives/{representative}', [RepresentativeController::class, 'destroy'])->name('organizations.representatives.destroy');
         });
     });
 });

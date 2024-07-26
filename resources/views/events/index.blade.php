@@ -15,7 +15,7 @@
                         ['label' => 'Название', 'field' => 'name', 'route' => 'events.show'],
                         ['label' => 'Начало', 'field' => 'start_time'],
                         ['label' => 'Конец', 'field' => 'end_time'],
-                        ['label' => 'Организация', 'field' => 'organization', 'route' => 'organizations.show']
+                        ['label' => 'Заказчик', 'field' => 'organization', 'route' => 'organizations.show']
                     ]" :actions="[
                         ['type' => 'link', 'route' => 'events.edit', 'label' => 'Редактировать', 'roles' => ['manager']],
                         ['type' => 'link', 'route' => 'events.show', 'label' => 'Посмотреть', 'roles' => ['manager', 'employee']],

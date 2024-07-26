@@ -18,7 +18,7 @@ class OrganizationFactory extends Factory
     {
         return [
             'name' => $this->faker->company,
-            'legal_address' => $this->faker->address,
+            'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->unique()->safeEmail,
         ];
     }

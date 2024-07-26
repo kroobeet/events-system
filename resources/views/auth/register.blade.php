@@ -33,7 +33,7 @@
         </div>
 
         <div>
-            <x-input-label for="organization" :value="__('Организация')" />
+            <x-input-label for="organization" :value="__('Относится к заказчику')" />
             <select name="organization" id="organization" class="block mt-1 w-full" required>
                 @foreach($organizations as $organization)
                     <option value="{{ $organization->name }}">{{ $organization->name }}</option>
@@ -65,8 +65,15 @@
         <!-- СНИЛС -->
         <div class="mt-4">
             <x-input-label for="snils" :value="__('СНИЛС')" />
-            <x-text-input id="snils" class="block mt-1 w-full" type="text" name="snils" :value="old('snils')" />
+            <x-text-input id="snils" class="block mt-1 w-full" type="number" name="snils" :value="old('snils')" />
             <x-input-error :messages="$errors->get('snils')" class="mt-2" />
+        </div>
+
+        <!-- Организация -->
+        <div class="mt-4">
+            <x-input-label for="organization_name" :value="__('Организация')" />
+            <x-text-input id="organization_name" class="block mt-1 w-full" type="text" name="organization_name" :value="old('organization_name')" />
+            <x-input-error :messages="$errors->get('organization_name')" class="mt-2" />
         </div>
 
         <!-- Password -->

@@ -7,14 +7,18 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <x-session-messages />
                     <h1 class="text-2xl font-semibold mb-4">{{ $user->full_name }}</h1>
+                    <p class="mb-4"><strong>Организация: </strong>{{ $user->organization_name ?? 'Не заполнено'}}</p>
                     @if (!empty($organization))
-                        <p class="mb-4"><strong>Организация: </strong><a href="{{ route('organizations.show', $organization->id) }}">{{ $organization->name }}</a></p>
+                        <p class="mb-4"><strong>Относится к заказчику: </strong><a href="{{ route('organizations.show', $organization->id) }}">{{ $organization->name }}</a></p>
                     @else
-                        <p class="mb-4"><strong>Организация: </strong>Отсутствует</p>
+                        <p class="mb-4"><strong>Относится к заказчику: </strong>Нет</p>
                     @endif
                     <p class="mb-4"><strong>Email: </strong>{{ $user->email }}</p>
                     <p class="mb-4"><strong>Год рождения: </strong>{{ $user->birth_year ?? 'Не заполнено'}}</p>
                     <p class="mb-4"><strong>Телефон: </strong>{{ $user->phone ?? 'Не заполнено'}}</p>
+                    <p class="mb-4"><strong>Диплом 1: </strong>{{ $user->diploma_1 ?? 'Не заполнено'}}</p>
+                    <p class="mb-4"><strong>Диплом 2: </strong>{{ $user->diploma_2 ?? 'Не заполнено'}}</p>
+                    <p class="mb-4"><strong>СНИЛС: </strong>{{ $user->snils ?? 'Не заполнено'}}</p>
                     <p class="mb-4"><strong>Кол-во мероприятий: </strong>{{ $user->events->count() ?? 'У пользователя нет мероприятий' }}</p>
 
                     @if($events->count() > 0)

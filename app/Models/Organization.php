@@ -10,13 +10,8 @@ class Organization extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'legal_address', 'email'];
+    protected $fillable = ['name', 'phone', 'email'];
     private mixed $name;
-
-    public function representatives(): HasMany
-    {
-        return $this->hasMany(Representative::class);
-    }
 
     public function users(): HasMany
     {
